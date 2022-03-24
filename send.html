@@ -1,0 +1,120 @@
+
+<html>
+    <head>
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+   
+       <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    
+       <title>Home</title>
+    </head>
+    <body>
+       <nav class="navbar navbar-light bg-light">
+       <div class="container-fluid">
+           <a href="home.php" class="navbar-brand">
+               Gestione pagamenti supe
+       </a>
+               
+       <ul class="nav">
+                   <a class="nav-link" href="send.php">Paga</a>
+               </il>
+               <il class="nav-item">
+                   <a class="nav-link" href="recive.php">Richiedi</a>
+               </il>
+               <il class="nav-item">
+                   <a class="nav-link" href="actual.php">Resoconto</a>
+               </il>
+               
+           </ul>
+           <div class=""> 
+               <span class="navbar-text    "> Matteo</span> 
+               <a href="logout.php" class="  btn btn-outline-warning ">Logout</a>
+           </div>
+       </div>
+   </nav>
+      
+    <div class="container center">
+      <h1 class="center">Paga<br><br></h1>
+      <div class="container" id="nomiScelti"></div>
+      <input  placeholder="Cerca un nome" id="inputNome" onkeyup="updateList()">
+      <ul class="list-group" id="listaNomi">
+
+      </ul>
+
+      <input type="number" placeholder="Valore" name="value" min="0" step=".01" class="validate">
+      <button type="submit" class="waves-effect waves-light btn-large grey darken-4" onclick="InviaPersone">Invia</button>
+  </div>
+
+  <script>
+      let nomiPoss=[
+          {nome:'matteo', id:1},
+          {nome:'ale', id:2},
+          {nome:'giada', id:3}
+      ]
+      let inp=document.getElementById("inputNome");
+      let listS=document.getElementById("nomiScelti");
+      let listN=document.getElementById("listaNomi");
+      let sele=new Set()
+      function updateList(){
+        listN.innerHTML=nomiPoss.filter(n=>n.nome.includes(inp.value)).map(o=>"<ul class='list-group-item list-group-item-action' onClick='addEl("+o.id+")'>"+o.nome+"</ul>").reduce((s,t)=>s+t,"");
+      };
+      
+      function addEl(id){
+          sele.add(id);
+          listS.innerHTML+=`<div id="sel${id}""> ${nomiPoss.find(x=>x.id==id).nome}<span onclick="remEl(${id})">X</span></div>`;
+      } 
+      function remEl(id){
+          sele.delete(id);
+          listS.childNodes.forEach(n=>{ if(n.id=="sel"+id) n.remove() });
+      }
+  </script>
+  
+  <!--JavaScript at end of body for optimized loading-->
+  <script type="text/javascript" src="../js/materialize.min.js"></script>
+  <script type="text/javascript">/*
+  function stringToHash(string) {
+
+                var hash = 0;
+
+                if (string.length == 0) return hash;
+
+                for (i = 0; i < string.length; i++) {
+                    char = string.charCodeAt(i);
+                    hash = ((hash << 5) - hash) + char;
+                    hash = hash & hash;
+                }
+
+                return hash;
+            }
+  document.addEventListener('DOMContentLoaded', function() {
+  var elems = document.querySelectorAll('.chips-autocomplete');
+  var instances = M.Chips.init(elems, {
+    autocompleteOptions: {
+      data:{
+        'matteo':null,
+        'ale':null,
+        'giada':null,
+       "$$": null
+     },  autocompleteOnly : true
+   },
+  onChipAdd: function(event) {
+     var container=document.getElementById("hiddens");
+     var input=document.createElement("input");
+     input.type="hidden";
+     input.name="idArray[]";
+     input.value=event[0].M_Chips.chipsData[event[0].M_Chips.chipsData.length-1]["tag"];
+     input.id=stringToHash(input.value);
+     container.appendChild(input);
+   },
+  onChipDelete: function(event, chip){
+    document.getElementById(stringToHash(chip.firstChild.data)).remove();
+  }
+  });
+});
+*/
+  </script>
+</body>
+</html>

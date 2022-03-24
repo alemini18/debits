@@ -1,7 +1,7 @@
 <?php
 include_once("credentials.php");
 function db_connect(){
-  $db=new mysqli(server(),user(),password(),database()) or die("Errore di connessione al database");
+  $db=new mysqli('localhost','root','','paga') or die("Errore di connessione al database");
   return $db;
 }
 
