@@ -1,4 +1,6 @@
-<?php session_start();
+<?php 
+
+include 'header.php';
 include_once("funzioni.php");
 $idArray=isset($_POST["idArray"])?$_POST["idArray"]:array();
 if(isset($_POST["id_from"])){

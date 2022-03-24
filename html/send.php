@@ -1,28 +1,21 @@
-<?php session_start();
-include_once("funzioni.php");?>
-<html>
-<head>
-  <!--Import Google Icon Font-->
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <!--Import materialize.css-->
-  <link type="text/css" rel="stylesheet" href="../css/materialize.min.css"  media="screen,projection"/>
+<?php 
+include 'header.php';
+include_once("funzioni.php");
 
-  <!--Let browser know website is optimized for mobile-->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Paga</title>
-</head>
-<body>
+?>
+
   <div class="container center">
     <h1 class="center">Paga<br><br></h1>
   <div class="chips chips-autocomplete" id="nomi"></div>
   <form action="insert.php" method="post">
     <div id="hiddens"></div>
-<input type="hidden" name="url" value="send.php">
-<input type="number" name="value" min="0" step=".01" class="validate">
+<input type="hidden" placeholder="Cerca" name="url" value="send.php">
+<input type="number" placeholder="Valore" name="value" min="0" step=".01" class="validate">
 <button type="submit" class="waves-effect waves-light btn-large grey darken-4">Invia</button>
 </form>
   </div>
 
+  
   <!--JavaScript at end of body for optimized loading-->
   <script type="text/javascript" src="../js/materialize.min.js"></script>
   <script type="text/javascript">

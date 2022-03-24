@@ -1,51 +1,37 @@
 <?php
-session_start();
+  include 'header.php';
 include_once("funzioni.php");
 $db=db_connect();
 if(!isset($_SESSION["id"])){
-if(!(isset($_POST["user"]) or isset($_POST["pass"]) or isset($_POST["submit"]))){
-  header("Location: login.php");
-}
-$user=$_POST["user"];
-$pass=$_POST["pass"];
-$result=$db->query('SELECT * FROM login_debits WHERE user="'.$user.'"');
-$id=-1;
-if($result->num_rows>0){
-  $row=$result->fetch_assoc();
-  if($row["pass"]!=$pass){
+  if(!(isset($_POST["user"]) or isset($_POST["pass"]) or isset($_POST["submit"]))){   //TODO: cambiare, necessario impostare per password
+    header("Location: login.php");
+  }
+  $user=$_POST["user"];
+  $pass=$_POST["pass"];
+  $result=$db->query('SELECT * FROM login_debits WHERE user="'.$user.'"');
+  $id=-1;
+  if($result->num_rows>0){
+    $row=$result->fetch_assoc();
+    if($row["pass"]!=$pass){
+      $_SESSION["valido"]=0;
+      header("Location: login.php");
+    }
+      $_SESSION["id"]=$row["id"];
+      $_SESSION['user']=$user;
+  }else{
     $_SESSION["valido"]=0;
     header("Location: login.php");
   }
-    $_SESSION["id"]=$row["id"];
-}else{
-  $_SESSION["valido"]=0;
-  header("Location: login.php");
-}}
-  ?>
- <html>
- <head>
-   <!--Import Google Icon Font-->
-   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-   <!--Import materialize.css-->
-   <link type="text/css" rel="stylesheet" href="../css/materialize.min.css"  media="screen,projection"/>
+}
 
-   <!--Let browser know website is optimized for mobile-->
-   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-   <title>Home</title>
- </head>
+$id=$_SESSION["id"];
+  ?>
  <body>
-   <div class="row">
-     <div class="col s4 offset-s5"><h1>Home</h1></div>
-     <div class="col s2">
-       <p style="text-align:right;"><?php $id=$_SESSION["id"];echo id_to_name($id)?></p>
-     </div>
-     <div class="col s1">
-     <a href="logout.php" class="waves-effect waves-light btn grey darken-4">Esci</a>
-   </div>
-   </div>
    <div class="container">
      <h3>Resoconto</h3>
      <?php
+
+    //  QUERY CHE FA TUTTO IN UNO: SELECT x.p, sum(x.valore) FROM (SELECT da p,valore FROM history_debits WHERE a='1' UNION SELECT a p,(-1* valore) valore FROM history_debits WHERE da='1') as x GROUP BY x.p;
      $bilancio=array();
      $storico=array();
      $result=$db->query('SELECT * FROM history_debits WHERE a="'.$id.'"');
@@ -69,7 +55,7 @@ if($result->num_rows>0){
   <a href="receive.php" class="waves-effect waves-light btn-large grey darken-4">Richiedi Denaro</a>
 
 </div>
-  <?php
+<?php
   echo '<h3>Storico</h3>';
   $storico=array_unique($storico);
   foreach($storico as $s){
